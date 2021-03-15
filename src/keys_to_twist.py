@@ -18,7 +18,7 @@ def keys_callback(msg, twist_pub):
     vels = key_mapping[msg.data[0]]
     g_last_twist.angular.z = vels[0]
     g_last_twist.linear.x  = vels[1]
-    twist_pub.publish(g_last_twist)
+    #twist_pub.publish(g_last_twist)
 
 
 if __name__ == '__main__':

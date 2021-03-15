@@ -53,9 +53,6 @@ find_package(catkin REQUIRED COMPONENTS
  add_message_files(
    FILES
    Aggregation.msg
-   Max.msg
-   Mean.msg
-   Min.msg
 #   Message1.msg
 #   Message2.msg
  )
@@ -170,7 +167,8 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
  catkin_install_python(PROGRAMS
-#   scripts/my_python_script
+#   scrdef PubAggregation(self, pose, cmd_vel, color):
+    #     self.__aggregate.ipts/my_python_script
    src/keys_to_twist.py
    src/log_server.py
    src/turtlesim_control.py

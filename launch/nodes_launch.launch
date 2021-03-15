@@ -1,8 +1,8 @@
 <launch>
-    <node pkg="package_turtlesim_ogu" type="keys_to_twist.py"            name="key_mapping_node"      />
-    <node pkg="package_turtlesim_ogu" type="log_server.py"               name="log_server_node"       />
+    <node pkg="package_turtlesim_ogu" type="keys_to_twist.py"            name="key_mapping_node"/>
+    <node pkg="package_turtlesim_ogu" type="log_server.py"               name="log_server_node"/>
     <node pkg="package_turtlesim_ogu" type="turtlesim_control.py"        name="turtlesim_control_node" output="screen"/>
-    <node pkg="package_turtlesim_ogu" type="turtlesim_logger.py"         name="aggregation_node"       output="screen"/> 
-    <node pkg="package_turtlesim_ogu" type="turtlesim_status_monitor.py" name="status_node"           /> 
-    <node pkg="turtlesim"             type="turtlesim_node"                     name="turtlesim_node" />
+    <!-- <node pkg="package_turtlesim_ogu" type="turtlesim_logger.py"         name="turtlesim_logger_node"/>  -->
+    <node pkg="package_turtlesim_ogu" type="turtlesim_status_monitor.py" name="turtlesim_status_monitor_node"/> 
+    <node pkg="turtlesim"             type="turtlesim_node"              name="turtlesim_node" />
 </launch>

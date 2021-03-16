@@ -11,6 +11,7 @@ import time
 import datetime
 import json
 import os
+import rospkg
 
 class Logger():
 
@@ -66,8 +67,14 @@ class Logger():
 
 class JsonConverter():
 
+    def __init__(self):
+        self.__rospack = rospkg.RosPack()
+        self.__package_path = self.__rospack.get_path('package_turtlesim_ogu')
+
     def convert_msg_2_json_object(self, vel, pos, col):
-        temp = {'cmd_vel':{'linear':{'x' : None, 'y' : None, 'z' : None},
+        date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        temp = {'timestamp': None,
+                'cmd_vel':{'linear':{'x' : None, 'y' : None, 'z' : None},
                            'angular':{'x' : None, 'y' : None, 'z' : None}},
                 'pose':   {'x' : None,
                            'y' : None,
@@ -77,7 +84,7 @@ class JsonConverter():
                 'color':  {'r' : None,
                            'g' : None,
                            'b' : None}}      
-
+        temp['timestamp'] = date
         temp['cmd_vel']['linear']['x']  = vel.linear.x
         temp['cmd_vel']['linear']['y']  = vel.linear.y
         temp['cmd_vel']['linear']['z']  = vel.linear.z
@@ -98,12 +105,8 @@ class JsonConverter():
         return temp
     
     def append_2_log_file(self, json_object):
-      print(json_object)
-      #ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-      #print(ts)
       try:
-        log = open('logfile.json', 'a')
-        log.write('\n')
+        log = open(self.__package_path +'/Docs/Logs/logfile.json', 'a')
         log.write(json.dumps(json_object))
         log.write('\n')
         log.close()
@@ -116,10 +119,10 @@ class JsonConverter():
     
 if __name__ == '__main__':
     rospy.init_node('turtlesim_logger')
-    logger = Logger(1)
+    logger = Logger(mod=1)
     logger.Sub2Topic('aggregation_values', Aggregation, logger.aggregation_cb)
     jConverter = JsonConverter()
-
+    
     while not rospy.is_shutdown():
         time.sleep(float(logger.log_interval))
         pose, vel, color = logger.getAggMsg()

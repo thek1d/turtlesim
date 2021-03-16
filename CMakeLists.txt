@@ -61,6 +61,7 @@ find_package(catkin REQUIRED COMPONENTS
  add_service_files(
    FILES
    log_frequency.srv
+   turtlesim_keyboard_control.srv
 #   Service1.srv
 #   Service2.srv
  )
@@ -174,6 +175,7 @@ include_directories(
    src/turtlesim_control.py
    src/turtlesim_logger.py
    src/turtlesim_status_monitor.py
+   src/turtlesim_keyboard_control_server.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 

@@ -12,7 +12,7 @@ def handle_log_server(req):
         return log_frequencyResponse('...Log interval is set to: ')
    
 def log_server():
-    rospy.init_node('log_frequency')
+    rospy.init_node('log_frequency_service_node')
     s = rospy.Service('log_frequency', log_frequency, handle_log_server)
     print("Log Server ready")
 

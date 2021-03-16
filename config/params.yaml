@@ -1,2 +1,2 @@
-shutdown_turtle_sim_control: False
+turtlesim_keyboard_control: False
 log_interval: 1

@@ -5,4 +5,5 @@
     <node pkg="package_turtlesim_ogu" type="turtlesim_logger.py"         name="turtlesim_logger_node" output="screen"/> 
     <node pkg="package_turtlesim_ogu" type="turtlesim_status_monitor.py" name="turtlesim_status_monitor_node"/> 
     <node pkg="turtlesim"             type="turtlesim_node"              name="turtlesim_node" />
+    <rosparam command="load" file="$(find package_turtlesim_ogu)/config/params.yaml" />
 </launch>

@@ -6,10 +6,10 @@ from package_turtlesim_ogu.srv import log_frequencyResponse
 import rospy
  
 def handle_log_server(req):
-    if req.mod < 0:
-        return log_frequencyResponse(0)
+    if req.log_interval < 0:
+        return log_frequencyResponse('...Log interval is set to: {t} [sec]...'.format(t=req.log_interval))
     else:
-        return log_frequencyResponse(req.mod)
+        return log_frequencyResponse('...Log interval is set to: ')
    
 def log_server():
     rospy.init_node('log_frequency')

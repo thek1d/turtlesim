@@ -15,19 +15,28 @@ import rospkg
 
 class Logger():
 
-    def __init__(self, mod):
-        self.__log_interval   = self.__log_frequency(mod)
+    def __init__(self, interval):
+        if interval < 0 :
+            self.__log_interval = 1
+            is_set_log_interval = self.__log_frequency(interval)
+            print(is_set_log_interval)
+            print('...log interval wrong...\n ...cannot be negativ...\n... set to default=1...\n ...please adjust "log_interval" in config/params.yaml...')
+        else:
+            self.__log_interval = interval
+            is_set_log_interval = self.__log_frequency(interval)
+            print(is_set_log_interval + '{t} [sec]...'.format(t=self.__log_interval))
+
         self.__aggregated_msg = Aggregation()
     
-    def __log_frequency(self, mod):
-        return self.__log_service_request_client(mod)
+    def __log_frequency(self, interval):
+        return self.__log_service_request_client(interval)
 
     def __log_service_request_client(self, mod):
         rospy.wait_for_service('log_frequency')
         try:
             log_client_obj = rospy.ServiceProxy('log_frequency', log_frequency)
             response = log_client_obj(mod)
-            return response.log_interval
+            return response.log_text
         except rospy.ServiceException as e:
             print("Service call failed: %s"%e)
     
@@ -83,7 +92,8 @@ class JsonConverter():
                            'angular_velocity' : None},
                 'color':  {'r' : None,
                            'g' : None,
-                           'b' : None}}      
+                           'b' : None}}
+
         temp['timestamp'] = date
         temp['cmd_vel']['linear']['x']  = vel.linear.x
         temp['cmd_vel']['linear']['y']  = vel.linear.y
@@ -119,7 +129,7 @@ class JsonConverter():
     
 if __name__ == '__main__':
     rospy.init_node('turtlesim_logger')
-    logger = Logger(mod=1)
+    logger = Logger(interval=rospy.get_param('/log_interval'))
     logger.Sub2Topic('aggregation_values', Aggregation, logger.aggregation_cb)
     jConverter = JsonConverter()
     
